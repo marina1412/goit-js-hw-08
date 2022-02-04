@@ -7,7 +7,8 @@ const STORAGE_KEY = 'feedback-form-state';
 populateMessageOutput();
 
 const formData = {
-
+    email: inputRef.value,
+    message: messageRef.value,
 };
 
 formRef.addEventListener('submit', onFormSubmit);
