@@ -14,15 +14,17 @@ const formData = {
 formRef.addEventListener('submit', onFormSubmit);
 formRef.addEventListener('input', throttle(onFormRefInput, 500) );
 
-
-
 function onFormSubmit(evt) { 
-    evt.preventDefault();
+    if (inputRef.value !== "" && messageRef.value !== "") {
+      evt.preventDefault();
     console.log(formData);
     evt.target.reset();
     localStorage.removeItem(STORAGE_KEY);
-    delete formData.email;
-    delete formData.message;
+     formData.email = "";
+    formData.message = "";  
+    } else {
+        alert('Заполните все поля формы, пожалуйста'); 
+    }   
 }
 
 function onFormRefInput(evt) { 
@@ -34,16 +36,8 @@ function populateMessageOutput() {
     const savedMessage = localStorage.getItem(STORAGE_KEY);
     const parsedMessage = JSON.parse(savedMessage);
     if (savedMessage) {
-        inputRef.value = parsedMessage.email;
-        messageRef.value = parsedMessage.message;
-        if (!parsedMessage.hasOwnProperty('email')) {
-        inputRef.value = " ";
+        inputRef.value = parsedMessage.email || "";
+        messageRef.value = parsedMessage.message || "";
     } 
-    if (!parsedMessage.hasOwnProperty('message')) {
-        messageRef.value = " ";
-     } 
-    } 
-    
-
 }
 
